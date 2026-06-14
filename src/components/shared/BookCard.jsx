@@ -24,7 +24,7 @@ const BookCard = ({ book }) => {
           <p className="text-xs text-red-400">{available_quantity} Left</p>
         </div>
 
-        <div className="btn bg-[#6ad8f1] w-full text-gray-800">
+        <div className="btn  w-full text-white hover:bg-[#6ad8f1]">
           <Link href={`/all-books/${id}`} className="">
             Details
           </Link>
