@@ -9,7 +9,7 @@ export default function Banner() {
           {/* Left Content */}
           <div>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
               Find Your
               <span className="text-primary"> Next Read </span>
               Today
