@@ -1,5 +1,18 @@
 import Image from 'next/image';
-import React from 'react';
+
+export const generateMetadata = async ({params})=>{
+  const {id} = await params
+  const res = await fetch(
+    "https://book-borrowing-platform-lac.vercel.app/book.json",
+  );
+  const data = await res.json();
+
+  const expectedData = data.find((d) => d.id == id);
+  return {
+    title: expectedData.title,
+    description: expectedData.author,
+  };
+};
 
 const BookDetails = async ({params}) => {
   const {id} = await params

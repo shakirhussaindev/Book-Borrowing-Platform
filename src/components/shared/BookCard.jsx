@@ -25,7 +25,7 @@ const BookCard = ({ book }) => {
         </div>
 
         <Link
-          href={`all-books/${id}`}
+          href={`/all-books/${id}`}
           className="btn w-full text-black bg-[#6ad8f1]"
         >
           Details
