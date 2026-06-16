@@ -24,11 +24,12 @@ const BookCard = ({ book }) => {
           <p className="text-xs text-red-400">{available_quantity} Left</p>
         </div>
 
-        <div className="btn w-full text-black bg-[#6ad8f1]">
-          <Link href={`/all-books/${id}`} className="">
-            Details
-          </Link>
-        </div>
+        <Link
+          href={`all-books/${id}`}
+          className="btn w-full text-black bg-[#6ad8f1]"
+        >
+          Details
+        </Link>
       </div>
     </Card>
   );

@@ -7,7 +7,7 @@ const MainLayout = ({children}) => {
   return (
     <div>
       <Navbar/>
-      <BookNews/>
+      {/* <BookNews/> */}
       {children}
       <Footer/>
     </div>
