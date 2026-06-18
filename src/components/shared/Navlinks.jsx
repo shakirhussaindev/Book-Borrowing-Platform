@@ -5,7 +5,7 @@ import React from "react";
 
 const Navlinks = ({ href, children }) => {
   const pathname = usePathname();
-  console.log(pathname, "Pathname");
+  // console.log(pathname, "Pathname");
   const isActive = href === pathname;
   return (
     <Link

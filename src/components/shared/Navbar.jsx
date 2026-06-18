@@ -2,18 +2,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
-// import { authClient } from "@/app/lib/auth-client";
 import Navlinks from "./Navlinks";
 import { MdOutlineMenuBook } from "react-icons/md";
+import { authClient } from "@/lib/auth-client";
 // import { usePathname, useRouter } from 'next/navigation';
 
 const Navbar = () => {
   // const pathname = usePathname();
   // const router = useRouter();
-  // const { data: session, isPending } = authClient.useSession();
-  // const user = session?.user;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log(user, "user");
 
- 
+  
 
   return (
     <div className="bg-black sticky top-0 z-100">
@@ -62,20 +63,19 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/*navbar end  */}
-        {/* <div className="navbar-end">
+        {/*navbar right  */}
+        <div className="navbar-end">
           {isPending ? (
-          <span className="loading loading-spinner loading-md"></span>
-           ) : user ? ( 
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="hidden md:block text-right">
-              <p className="text-xs text-gray-400">Welcome,</p>
-              <p className="text-sm font-bold">user.name</p>
-            </div>
+            <span className="loading loading-spinner loading-sm"></span>
+          ) : user ? (
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="hidden md:block text-right">
+                <p className="text-xl font-bold">{user.name}</p>
+              </div>
 
-             <Link href={"/my-profile"}>
+              <Link href={"/my-profile"}>
                 <div className="avatar">
-                  <div className="w-8 md:w-10 rounded-full ring ring-[#c6a635] flex items-center justify-center bg-[#c69335] text-white overflow-hidden">
+                  <div className="w-8 md:w-10 rounded-full flex items-center justify-center  text-white overflow-hidden">
                     {user?.image ? (
                       <Image
                         src={user?.image}
@@ -91,23 +91,23 @@ const Navbar = () => {
                     )}
                   </div>
                 </div>
-              </Link> 
+              </Link>
 
-            <button
-              // onClick={async () => authClient.signOut()}
-              className="btn btn-xs md:btn-md border border-amber-600 bg-transparent text-amber-600  hover:bg-linear-to-r from-amber-300 to-amber-800 hover:text-white text-sm font-bold"
-            >
-              Logout
-            </button>
-          </div>
-           ) : ( 
-          <Link href={"/login"}>
-            <button className="btn btn-sm md:btn-md border border-amber-600 bg-transparent text-amber-600  hover:bg-linear-to-r from-amber-300 to-amber-800 hover:text-white font-bold px-4 md:px-6">
-              Login
-            </button>
-          </Link>
+              <button
+                onClick={async () =>await authClient.signOut()}
+                className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link href={"/login"}>
+              <button className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]">
+                Login
+              </button>
+            </Link>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 "use client"
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 
@@ -8,8 +11,29 @@ import { FcGoogle } from "react-icons/fc";
 const LoginPage = () => {
 const { register, handleSubmit, formState: {errors} } = useForm();
 
-  const handleLogin = (data)=>{
+  const handleLogin = async (data)=>{
     console.log(data)
+
+    const { data:res, error } = await authClient.signIn.email({
+    email: data.email, // required
+    password: data.password, // required
+    rememberMe: true,
+    callbackURL: "/"
+  });
+  if(error){
+    alert(error.message)
+  }
+  if(res){
+    alert("Login successfull")
+  }
+  }
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const handleSignin =async () =>{
+      const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  console.log(data)
   }
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 py-10">
@@ -33,9 +57,8 @@ const { register, handleSubmit, formState: {errors} } = useForm();
               <input
                 type="email"
                 {...register("email", {
-                  required:  "Email field is required"
-                }
-              )}
+                  required: "Email field is required",
+                })}
                 placeholder="Enter your email"
                 className="input input-bordered w-full text-white outline-none"
               />
@@ -46,19 +69,25 @@ const { register, handleSubmit, formState: {errors} } = useForm();
               )}
             </div>
 
-            <div>
+            <div className="relative">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
 
               <input
-                type="password"
+                type={isShowPassword ? "text" : "password"}
                 {...register("password", {
                   required: "Password field is required",
                 })}
                 placeholder="Enter your password"
                 className="input input-bordered w-full text-white outline-none"
               />
+              <span
+                className="absolute top-8 right-4 cursor-pointer"
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              >
+                {isShowPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
               {errors.password && (
                 <p className="text-red-500 font-light">
                   {errors.password.message}
@@ -71,7 +100,7 @@ const { register, handleSubmit, formState: {errors} } = useForm();
 
           <div className="divider">OR</div>
 
-          <button className="btn btn-outline w-full">
+          <button onClick={handleSignin} className="btn btn-outline w-full">
             <FcGoogle size={22} />
             Continue with Google
           </button>

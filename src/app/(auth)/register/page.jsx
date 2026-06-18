@@ -1,6 +1,10 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
@@ -10,7 +14,30 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegister = (data) => {
+  const handleRegister = async (data) => {
+    console.log(data);
+    const { name, email, photo, password } = data;
+    // console.log(name,email,photo,password)
+    const { data: res, error } = await authClient.signUp.email({
+      name: name,
+      email: email,
+      password: password,
+      image: photo,
+      callbackURL: "/login",
+    });
+    console.log(res, error);
+    if (error) {
+      alert(error.message);
+    }
+    if(res){
+      alert("Signup succssful")
+    }
+  };
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const handleSignup = async () => {
+    const data = await authClient.signUp.social({
+      provider: "google",
+    });
     console.log(data);
   };
   return (
@@ -92,7 +119,7 @@ const Register = () => {
               )}
             </div>
 
-            <div>
+            <div className="relative">
               <label className="label">
                 <span className="label-text">
                   Password<span className="text-red-400">*</span>
@@ -100,13 +127,19 @@ const Register = () => {
               </label>
 
               <input
-                type="password"
+                type={isShowPassword ? "text" : "password"}
                 {...register("password", {
                   required: "Password field is required",
                 })}
                 placeholder="Create password"
                 className="input input-bordered w-full outline-none text-white"
               />
+              <span
+                className="absolute top-8 right-4 cursor-pointer"
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              >
+                {isShowPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
               {errors.password && (
                 <p className="text-red-500 font-light">
                   {errors.password.message}
@@ -119,7 +152,7 @@ const Register = () => {
 
           <div className="divider">OR</div>
 
-          <button className="btn btn-outline w-full">
+          <button onClick={handleSignup} className="btn btn-outline w-full">
             <FcGoogle size={22} />
             Continue with Google
           </button>
