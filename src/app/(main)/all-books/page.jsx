@@ -39,6 +39,7 @@ const AllBooksPage = () => {
   const filteredBook = allBooks.filter((book) => {
     const categoryMatch =
       selectedCategory === "All" ? true : book.category === selectedCategory;
+      
     const searchMatch = book.title
       .toLowerCase()
       .includes(search.toLocaleLowerCase());

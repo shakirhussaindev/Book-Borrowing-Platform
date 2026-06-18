@@ -21,5 +21,5 @@ export async function proxy(request) {
 }
 
 export const config = {
-  matcher: ["/my-profile", "/all-books/:path"],
+  matcher: ["/my-profile", "/updateProfile", "/all-books/:path"],
 };

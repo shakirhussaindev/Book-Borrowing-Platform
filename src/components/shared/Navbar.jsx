@@ -5,11 +5,10 @@ import logo from "@/assets/logo.png";
 import Navlinks from "./Navlinks";
 import { MdOutlineMenuBook } from "react-icons/md";
 import { authClient } from "@/lib/auth-client";
-// import { usePathname, useRouter } from 'next/navigation';
+
 
 const Navbar = () => {
-  // const pathname = usePathname();
-  // const router = useRouter();
+  
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   console.log(user, "user");
@@ -80,8 +79,8 @@ const Navbar = () => {
                       <Image
                         src={user?.image}
                         alt={user?.name}
-                        width={40}
-                        height={40}
+                        width={120}
+                        height={120}
                         className="rounded-full object-cover"
                       />
                     ) : (
@@ -93,12 +92,14 @@ const Navbar = () => {
                 </div>
               </Link>
 
-              <button
-                onClick={async () =>await authClient.signOut()}
-                className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]"
-              >
-                Logout
-              </button>
+              <Link href={'/'}>
+                <button
+                  onClick={async () => await authClient.signOut()}
+                  className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]"
+                >
+                  Logout
+                </button>
+              </Link>
             </div>
           ) : (
             <Link href={"/login"}>
