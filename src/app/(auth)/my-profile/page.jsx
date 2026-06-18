@@ -42,10 +42,7 @@ const MyProfilePage = () => {
                   <span className="text-base-content/70">{user?.email}</span>
                 </div>
 
-                <div className="flex justify-between">
-                  <span className="font-semibold">Phone</span>
-                  <span className="text-base-content/70"></span>
-                </div>
+                
               </div>
 
               <Link
