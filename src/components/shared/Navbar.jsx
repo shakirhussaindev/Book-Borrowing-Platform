@@ -13,7 +13,12 @@ const Navbar = () => {
   const user = session?.user;
   console.log(user, "user");
 
-  
+  const handleLogout = async () => {
+    await authClient.signOut();
+
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <div className="bg-black sticky top-0 z-100">
@@ -92,14 +97,12 @@ const Navbar = () => {
                 </div>
               </Link>
 
-              <Link href={'/'}>
-                <button
-                  onClick={async () => await authClient.signOut()}
-                  className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]"
-                >
-                  Logout
-                </button>
-              </Link>
+              <button
+                onClick={handleLogout}
+                className="btn btn-xs md:btn-md border  bg-[#79e4ff] text-black hover:bg-[#559daf]"
+              >
+                Logout
+              </button>
             </div>
           ) : (
             <Link href={"/login"}>
